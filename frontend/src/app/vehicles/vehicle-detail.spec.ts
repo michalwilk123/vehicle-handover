@@ -79,7 +79,7 @@ describe('VehicleDetail', () => {
     ]);
   });
 
-  it('refreshes readiness after verifying a document and undoing verification', async () => {
+  it('loads the readiness again after a document status changes', async () => {
     await respond('/api/vehicles/3/handover-readiness', {
       ready: false,
       missingDocumentTypes: [],
@@ -100,27 +100,5 @@ describe('VehicleDetail', () => {
     });
 
     await vi.waitFor(() => expect(readinessLines()).toEqual(['Ready for handover']));
-
-    const undo = Array.from(element.querySelectorAll<HTMLButtonElement>('tbody button')).find(
-      (button) => button.textContent.trim() === 'Undo verification',
-    )!;
-    undo.click();
-    const request = http.expectOne({ method: 'PUT', url: '/api/vehicles/3/documents/11/status' });
-    expect(request.request.body).toEqual({ status: 'PENDING' });
-    request.flush(PENDING_COC);
-    await respond('/api/vehicles/3/documents', [PENDING_COC]);
-    await respond('/api/vehicles/3/handover-readiness', {
-      ready: false,
-      missingDocumentTypes: [],
-      problems: [{ documentType: 'COC', reason: 'NOT_VERIFIED' }],
-    });
-
-    await vi.waitFor(() =>
-      expect(readinessLines()).toEqual([
-        'Not ready for handover',
-        'Problems:',
-        'Certificate of conformity (COC): not verified',
-      ]),
-    );
   });
 });

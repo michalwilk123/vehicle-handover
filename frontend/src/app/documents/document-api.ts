@@ -28,10 +28,7 @@ export const STATUS_ACTIONS: Record<DocumentStatus, { status: DocumentStatus; la
     { status: 'VERIFIED', label: 'Verify' },
     { status: 'REJECTED', label: 'Reject' },
   ],
-  VERIFIED: [
-    { status: 'PENDING', label: 'Undo verification' },
-    { status: 'REJECTED', label: 'Reject' },
-  ],
+  VERIFIED: [{ status: 'REJECTED', label: 'Reject' }],
   REJECTED: [],
 };
 

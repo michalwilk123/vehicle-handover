@@ -100,7 +100,7 @@ describe('VehicleDocuments', () => {
 
     expect(rows().map((row) => row[5].replace(/\s+/g, ' '))).toEqual([
       'Verify Reject',
-      'Undo verification Reject',
+      'Reject',
       '',
     ]);
   });
@@ -195,10 +195,40 @@ describe('VehicleDocuments', () => {
     expect(changes).toBe(1);
   });
 
+  it('lets staff undo a staged rejection and sends it only on confirmation', async () => {
+    const verified = { ...PENDING_COC, status: 'VERIFIED' };
+    await loadDocuments([verified]);
+
+    button('Reject').click();
+    fixture.detectChanges();
+    http.expectNone({ method: 'PUT', url: '/api/vehicles/4/documents/11/status' });
+    expect(rows()[0][4]).toBe('Verified');
+
+    button('Undo').click();
+    fixture.detectChanges();
+    http.expectNone({ method: 'PUT', url: '/api/vehicles/4/documents/11/status' });
+    expect(button('Reject')).toBeDefined();
+    expect(changes).toBe(0);
+
+    button('Reject').click();
+    fixture.detectChanges();
+    button('Confirm rejection').click();
+    const request = http.expectOne({ method: 'PUT', url: '/api/vehicles/4/documents/11/status' });
+    expect(request.request.body).toEqual({ status: 'REJECTED' });
+    const rejected = { ...verified, status: 'REJECTED' };
+    request.flush(rejected);
+    await loadDocuments([rejected]);
+
+    expect(rows()[0][4]).toBe('Rejected');
+    expect(changes).toBe(1);
+  });
+
   it('shows a status change error until a document save succeeds', async () => {
     await loadDocuments([PENDING_COC]);
 
     button('Reject').click();
+    fixture.detectChanges();
+    button('Confirm rejection').click();
     http
       .expectOne({ method: 'PUT', url: '/api/vehicles/4/documents/11/status' })
       .flush(

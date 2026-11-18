@@ -14,7 +14,7 @@ class DocumentStatusTest {
             "VERIFIED, REJECTED, true",
             "PENDING, PENDING, false",
             "VERIFIED, VERIFIED, false",
-            "VERIFIED, PENDING, true",
+            "VERIFIED, PENDING, false",
             "REJECTED, VERIFIED, false",
             "REJECTED, PENDING, false",
             "REJECTED, REJECTED, false",

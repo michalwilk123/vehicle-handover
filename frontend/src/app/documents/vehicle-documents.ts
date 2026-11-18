@@ -1,4 +1,4 @@
-import { Component, inject, input, numberAttribute, output, signal } from '@angular/core';
+import { Component, inject, input, linkedSignal, numberAttribute, output, signal } from '@angular/core';
 import { FormField, FormRoot, form, required } from '@angular/forms/signals';
 import { firstValueFrom } from 'rxjs';
 import {
@@ -56,6 +56,10 @@ export class VehicleDocuments {
   protected readonly statusLabels = DOCUMENT_STATUS_LABELS;
   protected readonly statusActions = STATUS_ACTIONS;
   protected readonly statusError = signal<string | null>(null);
+  protected readonly pendingRejectionId = linkedSignal({
+    source: this.vehicleId,
+    computation: (): number | null => null,
+  });
 
   private readonly model = signal(emptyModel());
 
@@ -88,7 +92,22 @@ export class VehicleDocuments {
     return loadErrorMessage(error, 'Vehicle not found');
   }
 
-  protected async changeStatus(document: VehicleDocument, status: DocumentStatus): Promise<void> {
+  protected requestStatusChange(document: VehicleDocument, status: DocumentStatus): void {
+    if (status === 'REJECTED') {
+      this.pendingRejectionId.set(document.id);
+      return;
+    }
+    void this.changeStatus(document, status);
+  }
+
+  protected confirmRejection(document: VehicleDocument): void {
+    if (this.pendingRejectionId() === document.id) {
+      this.pendingRejectionId.set(null);
+      void this.changeStatus(document, 'REJECTED');
+    }
+  }
+
+  private async changeStatus(document: VehicleDocument, status: DocumentStatus): Promise<void> {
     this.statusError.set(null);
     try {
       await firstValueFrom(this.documentApi.changeStatus(this.vehicleId(), document.id, status));

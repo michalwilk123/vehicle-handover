@@ -33,7 +33,7 @@ Give dealership staff a vehicle document checklist in the application. Show whet
 | D-05 | Let staff change the status of a `PENDING` document to `VERIFIED` or `REJECTED`. Keep a rejected document in the document history. Keep the status of a rejected document at `REJECTED`. See the assumptions for changes from `VERIFIED`. | [Meeting](BRIEF.md#L85), [Final decision](BRIEF.md#L111-L115) |
 | D-06 | Let staff add a new document after staff reject the active document of that type. Start the new document in `PENDING`. | [Final decision](BRIEF.md#L111-L115), [API](BRIEF.md#L31) |
 | D-07 | Return HTTP 409 for a status change that does not agree with the status rules. | [API](BRIEF.md#L26) |
-| D-08 | Let staff change a document status on the vehicle detail page. Show the new status. Give verified documents an Undo verification action. Update the readiness result after staff add a document or change its status. | [Meeting](BRIEF.md#L85), [UI scope](BRIEF.md#L15) |
+| D-08 | Let staff change a document status on the vehicle detail page. Let staff undo a rejection before they confirm it. Save the rejection only after staff confirm it. Show the new status. Update the readiness result after staff add a document or change its status. | [Meeting](BRIEF.md#L85), [UI scope](BRIEF.md#L15) |
 
 Use the table to select the required document types. [Meeting](BRIEF.md#L71-L81)
 
@@ -76,7 +76,7 @@ For this version, use the order in the document type table for both readiness ar
 
 | Question for the customer | Assumption for this version |
 | --- | --- |
-| Can staff undo verification, reject a verified document, or send the same status again? | Accept a change from `PENDING` to `VERIFIED` or `REJECTED`. Accept a change from `VERIFIED` to `PENDING` to undo verification. Keep the same document active. Accept a change from `VERIFIED` to `REJECTED` so staff can replace an expired or incorrect document. Return HTTP 409 for all other requests with one of the three status values. |
+| Can staff change a verified document to rejected? Can staff send the same status again? | Accept a change from `PENDING` to `VERIFIED` or `REJECTED`. Accept a change from `VERIFIED` to `REJECTED`. This lets staff replace a verified document if it expires or has an error. Return HTTP 409 for all other requests with one of the three status values. |
 | Which types need an expiry date? Which types can have one? | The API makes the field optional for all types. Accept an OC policy without an expiry date. A document without an expiry date passes the expiry check. |
 | Which time zone defines the current date? Must the issue date be on or before the expiry date and the planned handover date? | Use the dealership date in `Europe/Warsaw`. Compare the issue date only with the current date. |
 | Which date does the application use to check expiry if the planned handover date has no value? Can one type have two problems? | Report missing types and status problems without a handover date. Check expiry against the planned handover date. If the planned handover date has no value, use the current date in `Europe/Warsaw`. Report both problems if both checks fail for one active document. |
