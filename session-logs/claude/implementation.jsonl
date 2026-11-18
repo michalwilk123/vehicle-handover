@@ -1,0 +1,160 @@
+{"type": "session", "source": "Claude Code", "title": "Implement customers and vehicle handover features", "scope": "Vehicle Handover recruitment project", "redactions": "Public export. Contains project messages and tool event metadata. Private paths, account metadata, hidden reasoning, attachments, and raw tool inputs and outputs are omitted or redacted."}
+{"type": "message", "timestamp": "2026-11-18T09:40:26.966Z", "role": "user", "text": "Act as the implementation sub-agent for this task.\n\nWork only in the real nested Git repository vehicle-handover-starter; the containing hangular repo is just a workspace wrapper. Confirm its current branch main and initial HEAD 97b4485. Implement features B and A from BRIEF.md and INTENT.md. Read both in full, AGENTS.md, CLAUDE.md, and .claude/skills/feature-slice/SKILL.md before code. Use ac lock for repository mutations (release when done; see [local-path]). You are the only writer during this task. Follow BRIEF order: first generate the complete customer feature only through the feature-slice workflow and verify it; if a generative gap requires changing the skill, improve it generally, re-generate, and document as applicable. Commit B before starting A. Then use feature-slice for the A entity, migration, API/UI skeleton. Implement A-specific business rules and readiness separately, with regression tests. Keep the documented product assumptions and fixed API. Ensure service/database race safety on active documents and normalized email, normal navigation, and real production migration behavior. Do not import benchmark features. Write DECISIONS.md truthfully: which pieces the skill generated, which were added directly, observed AI mistakes and how they were detected, decisions and rationale. Make focused local commits as you go; no push, PR, or external submission. Use JDK at [local-path] and Node at [local-path]; verify ./test.sh and npm run build, plus a reasonable real-API smoke test. Report B and A commits, exact test counts, any issues and decisions. No subagents. Parent will request a separate independent Opus review."}
+{"type": "tool_call", "timestamp": "2026-11-18T09:40:29.120Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:40:29.290Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:40:31.073Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:40:31.102Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:40:33.046Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:40:33.082Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:40:35.573Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:40:35.674Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:40:38.375Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:40:38.420Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:40:39.509Z", "role": "assistant", "text": "Reading the vehicle module (backend done, frontend next) before generating feature B with the skill."}
+{"type": "tool_call", "timestamp": "2026-11-18T09:40:40.724Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:40:40.770Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:40:43.461Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:40:43.524Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:40:45.995Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:40:59.744Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:41:02.726Z", "tool": "Skill"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:41:02.740Z", "tool": "Skill", "error": true}
+{"type": "tool_call", "timestamp": "2026-11-18T09:41:25.933Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:41:25.963Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:41:52.861Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:41:52.934Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:41:58.037Z", "role": "assistant", "text": "Now the backend tests, following the vehicle test classes."}
+{"type": "tool_call", "timestamp": "2026-11-18T09:42:53.650Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:43:07.114Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:43:09.564Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:43:20.938Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:43:24.868Z", "role": "assistant", "text": "Backend for B: 60 tests pass (31 new). Now the frontend slice."}
+{"type": "tool_call", "timestamp": "2026-11-18T09:43:51.150Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:43:51.238Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:44:08.575Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:44:17.210Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:44:22.116Z", "role": "assistant", "text": "Frontend: 15 tests pass (6 new), build compiles the lazy `customers-routes` chunk. Now the skill's Verify step against the real API."}
+{"type": "tool_call", "timestamp": "2026-11-18T09:44:28.750Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:44:36.287Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:44:38.199Z", "role": "assistant", "text": "Concurrent duplicate-email check (case variants) to confirm the DB constraint returns 409, not 500:"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:44:40.440Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:44:41.568Z", "tool": "Bash", "error": true}
+{"type": "tool_call", "timestamp": "2026-11-18T09:45:02.143Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:45:02.246Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:45:03.941Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:45:05.022Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:45:09.956Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:45:29.293Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:45:46.620Z", "tool": "Write"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:45:46.660Z", "tool": "Write", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:45:49.408Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:45:49.491Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:46:40.296Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:46:40.344Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:46:41.939Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:46:41.963Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:46:43.848Z", "role": "assistant", "text": "Writing the skill-generated skeleton for documents (backend):"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:47:10.019Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:47:10.075Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:47:12.976Z", "role": "assistant", "text": "Skeleton tests (controller, service, repository incl. cascade on vehicle delete):"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:47:56.250Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:48:11.703Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:48:16.065Z", "role": "assistant", "text": "Backend skeleton: 77 tests pass, and the vehicle delete cascades to documents. Now the frontend skeleton: a documents component, wired into the vehicle detail page."}
+{"type": "tool_call", "timestamp": "2026-11-18T09:48:40.595Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:48:41.280Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:49:02.850Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:49:15.019Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:49:17.513Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:49:29.163Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:49:31.387Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:49:41.910Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:49:48.848Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:49:58.916Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:50:04.403Z", "role": "assistant", "text": "A pending reload request keeps the zoneless fixture unstable, so `whenStable()` after the flush hangs. I'll wait for the reload request instead:"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:50:06.611Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:50:12.480Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:50:15.077Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:50:25.032Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:50:27.386Z", "role": "assistant", "text": "Skeleton done: frontend 23 tests, build OK. Committing the skill-generated A skeleton."}
+{"type": "tool_call", "timestamp": "2026-11-18T09:50:28.860Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:50:28.928Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:50:32.697Z", "role": "assistant", "text": "Next, the hand-written parts. First V-01, the registration choice on Vehicle:"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:50:41.177Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:50:41.258Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:50:44.971Z", "role": "assistant", "text": "I'll drop the extra `VehicleRequest` constructor (it could confuse Jackson's record binding) and update the test call sites instead:"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:51:02.492Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:51:18.841Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:51:22.451Z", "role": "assistant", "text": "Backend 82 passing. Now the frontend for the registration choice:"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:51:32.996Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:51:39.517Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:51:42.717Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:51:49.084Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:52:08.224Z", "role": "assistant", "text": "Now document business rules (D-03..D-07): Warsaw clock, issue-date constraint, status transitions, and active-document uniqueness enforced by a vehicle row lock plus a DB constraint."}
+{"type": "tool_call", "timestamp": "2026-11-18T09:52:32.336Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:52:32.432Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:52:37.289Z", "role": "assistant", "text": "Tests for the rules: transition matrix, Warsaw-date validator, service conflicts, DB constraint, plus a real-DB integration test with the INTENT D-flow and concurrent creates."}
+{"type": "tool_call", "timestamp": "2026-11-18T09:53:34.646Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:53:53.499Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:53:56.285Z", "role": "assistant", "text": "My test VIN helper truncated the varying digit (7 + 11 chars cut to 17), so the VINs collided. Fixing:"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:53:58.741Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:54:21.537Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:54:25.381Z", "role": "assistant", "text": "Backend: 111 passing, including the parallel-add test (one 201, the rest 409). Next, the UI shows only the allowed status actions:"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:54:32.636Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:54:39.419Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:54:42.685Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:54:50.093Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:54:53.434Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:54:59.915Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:55:04.686Z", "role": "assistant", "text": "Now readiness (R-01..R-06): a pure evaluator, a service, and a controller in a `handover` package."}
+{"type": "tool_call", "timestamp": "2026-11-18T09:55:20.600Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:55:20.655Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:55:23.168Z", "role": "assistant", "text": "Readiness tests: every row of the INTENT acceptance table, plus ordering and a real-DB/API check:"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:56:09.338Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:56:32.642Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:56:35.197Z", "role": "assistant", "text": "Test error on my side: with no handover date the reference date is today, and the expiry I picked (handover date − 1 day) is after today. Fixing the fixture:"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:56:37.564Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:56:59.256Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:57:05.439Z", "role": "assistant", "text": "Backend: 128 passing. Now the readiness UI on the vehicle detail page, refreshed after document changes:"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:57:17.019Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:57:17.089Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:57:19.647Z", "role": "assistant", "text": "Spec for the vehicle detail wiring (readiness text, refresh after a status change):"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:57:31.291Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:57:40.235Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:57:42.272Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:57:45.853Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:57:49.352Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:57:52.751Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:57:55.156Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:58:02.293Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:58:04.796Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:58:11.936Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:58:13.950Z", "role": "assistant", "text": "Angular strips whitespace between elements, so I'll assert on the individual `p`/`li` texts:"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:58:19.168Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:58:23.396Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:58:25.473Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:58:25.503Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:58:28.316Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:58:34.791Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:58:39.706Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:59:10.041Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T09:59:13.487Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:59:13.547Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:59:17.112Z", "role": "assistant", "text": "Readiness committed (`9050f90`). Next, a real-API smoke test of the A acceptance checks through `./run.sh` (backend plus the frontend proxy):"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:59:31.366Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:59:37.134Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:59:38.830Z", "role": "assistant", "text": "The frontend came up before the backend (502 from the proxy). I'll wait for the backend and rerun from a script:"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:59:52.106Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:59:53.061Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T09:59:55.928Z", "role": "assistant", "text": "Every acceptance check matches INTENT. Now a parallel-add race through the real server, then I'll stop the app:"}
+{"type": "tool_call", "timestamp": "2026-11-18T09:59:58.314Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:59:58.482Z", "tool": "Bash", "error": true}
+{"type": "tool_call", "timestamp": "2026-11-18T09:59:59.853Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T09:59:59.911Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T10:00:10.934Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T10:00:10.988Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T10:00:13.547Z", "role": "assistant", "text": "Now the A section of DECISIONS.md:"}
+{"type": "tool_call", "timestamp": "2026-11-18T10:00:43.110Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T10:01:08.302Z", "tool": "Bash", "error": false}
+{"type": "tool_call", "timestamp": "2026-11-18T10:01:11.958Z", "tool": "Bash"}
+{"type": "tool_result", "timestamp": "2026-11-18T10:01:12.030Z", "tool": "Bash", "error": false}
+{"type": "message", "timestamp": "2026-11-18T10:01:29.999Z", "role": "assistant", "text": "Features B and A are done and committed locally in `vehicle-handover-starter`, on `main` from initial HEAD `97b4485`. Nothing was pushed. The final `./test.sh` passes with **128 backend tests** (baseline 29) and **27 frontend tests** (baseline 9), and `npm run build` succeeds. I released the `ac` lock at the end.\n\n**Important caveat:** the `/feature-slice` skill wasn't registered in this session, because it started from the parent `hangular` directory and `Skill(feature-slice)` returned \"Unknown skill\". So I followed SKILL.md's steps by hand, in order. The same agent wrote and reviewed the code, which is a weaker test of the skill than a fresh independent run. DECISIONS.md says this.\n\n**Commits:**\n\n| Commit | Source | What |\n| --- | --- | --- |\n| `82106d9` | skill change | New general rules found while building B (listed below) |\n| `fde07fc` | **B**, skill only | Customers: backend, `V4__customer.sql`, frontend, nav link, tests. No hand edits after generation. |\n| `544128d` | **A**, skill | Document entity, `V5` migration (documents deleted with their vehicle), list/add/status API skeleton, documents UI on vehicle detail, tests |\n| `870b0b5` | A, by hand | Registration choice on vehicles (`V6`, defaults to false for existing rows; PUT without the field keeps the saved value) |\n| `129d057` | A, by hand | Document rules: issue date not after today (Warsaw date, from an injected clock); one active document per type; allowed status changes only, otherwise 409 |\n| `9050f90` | A, by hand | Readiness endpoint and panel, refreshed after every document change |\n| `edafb34` | skill + AGENTS.md | Two frontend-testing notes; \"use the injected Warsaw clock for today\" |\n| `7c9db5b` | DECISIONS.md | A section |\n\nB's commit also adds DECISIONS.md with the B section.\n\n**Skill changes from B.** The first B output already passed every check, but several correct choices came from my judgment, not from the skill. I turned them into general rules:\n- Trim input before validation, so length limits apply to the trimmed value.\n- When a uniqueness rule ignores letter case, put the unique constraint on a normalized column (customers use `email_key`). A plain `UNIQUE(email)` doesn't protect it.\n- Use `saveAndFlush` so a duplicate shows up as a 409 inside the request.\n- Child-entity rules, locking for \"one active per scope\", and migrations that work on databases with existing rows.\n- Verify with real curl calls, including parallel duplicate requests.\n\nB already followed all of these, so I didn't regenerate it.\n\n**Race safety:**\n- **Customer email:** the unique constraint on the lower-case `email_key`. Twelve parallel creates with three emails in different letter cases gave 3×201 and 9×409, with no 500s.\n- **Active documents:** the service locks the vehicle row before checking. The `V7` migration also adds a unique constraint on `(vehicle_id, active_type)`, where `active_type` is empty once a document is rejected. This works in H2, which has no partial indexes, and in PostgreSQL. Eight parallel adds in an integration test, and ten against the running app, each produced exactly one 201 and one stored document.\n\n**AI mistakes, all caught by failing tests before commit:**\n- A generated frontend spec waited for the page to settle after a write while a list reload was still pending, so the test hung.\n- The skeleton UI offered \"Verify\" on rejected documents. I found this when reviewing against D-05.\n- My test helper made duplicate VINs (it cut off the digit that changes).\n- One readiness test had wrong fixture data; the rule itself was correct.\n- A text assertion broke because Angular removes whitespace between elements.\n- One TypeScript type error in a spec.\n\nThe two test-pattern mistakes (the hang and the whitespace) are now notes in the skill.\n\n**Smoke test:** I ran `./run.sh` and used curl through the frontend proxy on port 4200. All the V-01 and D acceptance checks behaved as INTENT.md expects:\n- Duplicate active document: 409.\n- Future issue date and unknown type: 400.\n- Rejected document to verified: 409.\n- Replacement after rejection: 201.\n- Document of another vehicle: 404.\n- Vehicle delete: 204, and the documents are gone.\n- Readiness showed the expected `NOT_VERIFIED`, `EXPIRED`, missing `REGISTRATION_POA` and `NO_HANDOVER_DATE` results.\n\nThe pages `/vehicles`, `/vehicles/3`, `/customers` and `/customers/new` return 200. I didn't click through the UI in a browser; the component specs cover it.\n\n**Decisions to flag for the review:**\n- I kept INTENT's assumptions as written, including that a verified document can be rejected and that the API itself doesn't require an expiry date for any type.\n- If an existing database already has two active documents of one type, `V7` fails on purpose rather than picking one silently.\n- I didn't add seed customers.\n- The vehicle API stays compatible with clients that don't send the new registration field."}
