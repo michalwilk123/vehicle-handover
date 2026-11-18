@@ -96,7 +96,7 @@ Anna gives the rule for this version at the end of the meeting. To replace a rej
 | --- | --- |
 | First name and last name | Both fields must have a value. Each field must have 1 to 50 characters. |
 | Email address | The address must pass Jakarta Bean Validation `@Email`. Accept a maximum of 254 characters. |
-| Telephone number | The number must have 1 to 50 characters and at least one digit. Accept digits, spaces, plus signs, hyphens, periods, and parentheses. |
+| Telephone number | The number must have nine digits. A space or hyphen can separate two digits. Enter the number without a country code. |
 | NIP | Accept an empty value. If the field has a value, the value must have ten characters. Each character must be a digit. Do not do a checksum check. |
 
 Ignore spaces at the start and end of each customer field. Apply the length limits after this step.

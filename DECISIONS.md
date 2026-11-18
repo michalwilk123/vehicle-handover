@@ -1,0 +1,1 @@
+- polepszono walidacje pól w formularzu (numer telefonu)

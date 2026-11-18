@@ -20,9 +20,8 @@ public record CustomerRequest(
         String email,
 
         @NotBlank
-        @Size(max = 50)
-        @Pattern(regexp = "[0-9 +\\-.()]*[0-9][0-9 +\\-.()]*",
-                message = "must contain a digit and only digits, spaces, +, -, . and parentheses")
+        @Pattern(regexp = "[0-9](?:[ -]?[0-9]){8}",
+                message = "must contain 9 digits without a country code")
         String phone,
 
         @Pattern(regexp = "[0-9]{10}", message = "must be 10 digits")

@@ -1,5 +1,5 @@
 import { Component, computed, inject, input, linkedSignal } from '@angular/core';
-import { FormField, FormRoot, form, required } from '@angular/forms/signals';
+import { FormField, FormRoot, form, pattern, required } from '@angular/forms/signals';
 import { Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { loadErrorMessage, problemDetailToFormErrors } from '../shared/problem-detail';
@@ -59,6 +59,9 @@ export class CustomerForm {
       required(path.lastName, { message: 'Last name is required' });
       required(path.email, { message: 'Email is required' });
       required(path.phone, { message: 'Phone is required' });
+      pattern(path.phone, /^\s*[0-9](?:[ -]?[0-9]){8}\s*$/, {
+        message: 'Enter 9 digits without a country code',
+      });
     },
     {
       submission: {

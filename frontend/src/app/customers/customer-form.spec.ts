@@ -32,7 +32,7 @@ describe('CustomerForm', () => {
     fill(0, 'Jan');
     fill(1, 'Kowalski');
     fill(2, 'jan.kowalski@example.com');
-    fill(3, '+48 600 100 200');
+    fill(3, '600 100 200');
   }
 
   async function submit(): Promise<void> {
@@ -56,6 +56,16 @@ describe('CustomerForm', () => {
     ]);
   });
 
+  it.each(['997', '+48 600 100 200'])('rejects phone number %s before sending it', async (phone) => {
+    fillValidCustomer();
+    fill(3, phone);
+
+    await submit();
+
+    http.expectNone('/api/customers');
+    expect(errors()).toEqual(['Enter 9 digits without a country code']);
+  });
+
   it('creates a customer without NIP as null and navigates to its details', async () => {
     const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
     fillValidCustomer();
@@ -67,7 +77,7 @@ describe('CustomerForm', () => {
       firstName: 'Jan',
       lastName: 'Kowalski',
       email: 'jan.kowalski@example.com',
-      phone: '+48 600 100 200',
+      phone: '600 100 200',
       nip: null,
     });
     request.flush({ id: 5, ...request.request.body });

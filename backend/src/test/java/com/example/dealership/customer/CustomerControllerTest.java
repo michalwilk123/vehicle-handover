@@ -22,6 +22,8 @@ import com.example.dealership.error.ConflictException;
 import com.example.dealership.error.NotFoundException;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -39,7 +41,7 @@ class CustomerControllerTest {
               "firstName": "Jan",
               "lastName": "Kowalski",
               "email": "jan.kowalski@example.com",
-              "phone": "+48 600 100 200",
+              "phone": "600 100 200",
               "nip": "1234567890"
             }
             """;
@@ -61,7 +63,7 @@ class CustomerControllerTest {
                 .andExpect(jsonPath("$[0].firstName").value("Jan"))
                 .andExpect(jsonPath("$[0].lastName").value("Kowalski"))
                 .andExpect(jsonPath("$[0].email").value(EMAIL))
-                .andExpect(jsonPath("$[0].phone").value("+48 600 100 200"))
+                .andExpect(jsonPath("$[0].phone").value("600 100 200"))
                 .andExpect(jsonPath("$[0].nip").value("1234567890"));
     }
 
@@ -145,13 +147,14 @@ class CustomerControllerTest {
                 .andExpect(jsonPath("$.errors[3].message").value("must be 10 digits"))
                 .andExpect(jsonPath("$.errors[4].field").value("phone"))
                 .andExpect(jsonPath("$.errors[4].message")
-                        .value("must contain a digit and only digits, spaces, +, -, . and parentheses"));
+                        .value("must contain 9 digits without a country code"));
         verifyNoInteractions(customerService);
     }
 
-    @Test
-    void createReturnsBadRequestWhenPhoneHasNoDigit() throws Exception {
-        String body = VALID_BODY.replace("+48 600 100 200", "+ - ()");
+    @ParameterizedTest
+    @ValueSource(strings = {"997", "60010020", "6001002000", "+48 600 100 200", "48 600 100 200", "+ - ()"})
+    void createReturnsBadRequestWhenPhoneIsNotADomesticNumber(String phone) throws Exception {
+        String body = VALID_BODY.replace("600 100 200", phone);
 
         mockMvc.perform(post("/api/customers").contentType(MediaType.APPLICATION_JSON).content(body))
                 .andExpect(status().isBadRequest())
@@ -270,6 +273,6 @@ class CustomerControllerTest {
     }
 
     private static CustomerResponse response() {
-        return new CustomerResponse(1L, "Jan", "Kowalski", EMAIL, "+48 600 100 200", "1234567890");
+        return new CustomerResponse(1L, "Jan", "Kowalski", EMAIL, "600 100 200", "1234567890");
     }
 }
