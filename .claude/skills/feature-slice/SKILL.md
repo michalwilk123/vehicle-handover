@@ -28,6 +28,7 @@ Read the corresponding implementation and tests in `backend/src/{main,test}/java
 - Follow the vehicle list, detail and shared create/edit form with standalone components, `httpResource` reads, and signal forms. Use the shared route parameter and ProblemDetail helpers. Register a lazy route and navigation for a standalone slice, or wire the UI into its parent for a child slice.
 - Match request and response types to the API. Map the form deliberately in both directions. Preserve zero and false. Convert empty optional inputs to the API representation. Give enum values usable labels and use controls suited to each field.
 - Use the vehicle screens for loading, empty, and error states. Keep field errors at their inputs and general errors visible. After a write, show the saved values or refresh the list. Cover the form's create and edit payloads, optional values, and server errors with frontend tests.
+- In component tests, a pending `httpResource` request keeps the zoneless fixture unstable, so `await fixture.whenStable()` waits forever after a write that triggers a reload. Wait for the reload with `await vi.waitFor(() => http.expectOne(...))` and flush it. Angular removes whitespace between elements, so assert on the text of each element, not on the text of a container.
 
 ## Verify
 

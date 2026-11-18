@@ -50,7 +50,27 @@ class VehicleRepositoryTest {
         assertThat(found.getProductionYear()).isEqualTo(2026);
         assertThat(found.getFuelType()).isEqualTo(FuelType.ELECTRIC);
         assertThat(found.getPlannedHandoverDate()).isEqualTo(LocalDate.of(2027, 3, 1));
+        assertThat(found.isDealershipRegisters()).isFalse();
         assertThat(vehicleRepository.existsByVin(VIN)).isTrue();
         assertThat(vehicleRepository.existsByVinAndIdNot(VIN, saved.getId())).isFalse();
+    }
+
+    @Test
+    void dealershipRegistersIsStored() {
+        Vehicle saved = vehicleRepository.save(
+                new Vehicle(VIN, "Ford", "Focus", 2026, FuelType.ELECTRIC, null, true));
+        entityManager.flush();
+        entityManager.clear();
+
+        assertThat(vehicleRepository.findById(saved.getId()).orElseThrow().isDealershipRegisters()).isTrue();
+    }
+
+    @Test
+    void migrationGivesSeededVehiclesCustomerRegistration() {
+        Vehicle seeded = vehicleRepository.findAll().stream()
+                .filter(vehicle -> vehicle.getVin().equals("WVWZZZ1KZAW000001"))
+                .findFirst().orElseThrow();
+
+        assertThat(seeded.isDealershipRegisters()).isFalse();
     }
 }

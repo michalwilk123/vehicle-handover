@@ -16,11 +16,19 @@
     <dd>{{ fuelTypeLabels[vehicle.fuelType] }}</dd>
     <dt>Planned handover</dt>
     <dd>{{ vehicle.plannedHandoverDate ?? '—' }}</dd>
+    <dt>Registration</dt>
+    <dd>{{ vehicle.dealershipRegisters ? 'Dealership registers' : 'Customer registers' }}</dd>
   </dl>
 
   <p><a [routerLink]="['/vehicles', vehicle.id, 'edit']">Edit</a></p>
 
   <section>
+    <h2>Handover readiness</h2>
+    <app-handover-readiness #readiness [vehicleId]="vehicle.id" />
+  </section>
+
+  <section>
     <h2>Documents</h2>
+    <app-vehicle-documents [vehicleId]="vehicle.id" (changed)="readiness.reload()" />
   </section>
 }

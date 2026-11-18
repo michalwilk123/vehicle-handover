@@ -20,6 +20,7 @@ interface VehicleFormModel {
   productionYear: number | null;
   fuelType: FuelType | '';
   plannedHandoverDate: string;
+  dealershipRegisters: boolean;
 }
 
 function toFormModel(vehicle: Vehicle | undefined): VehicleFormModel {
@@ -30,6 +31,7 @@ function toFormModel(vehicle: Vehicle | undefined): VehicleFormModel {
     productionYear: vehicle?.productionYear ?? null,
     fuelType: vehicle?.fuelType ?? '',
     plannedHandoverDate: vehicle?.plannedHandoverDate ?? '',
+    dealershipRegisters: vehicle?.dealershipRegisters ?? false,
   };
 }
 
@@ -41,6 +43,7 @@ function toRequest(model: VehicleFormModel): VehicleRequest {
     productionYear: model.productionYear!,
     fuelType: model.fuelType as FuelType,
     plannedHandoverDate: model.plannedHandoverDate || null,
+    dealershipRegisters: model.dealershipRegisters,
   };
 }
 

@@ -33,6 +33,11 @@ describe('VehicleForm', () => {
     select.dispatchEvent(new Event('input'));
   }
 
+  function toggleDealershipRegisters(): void {
+    const checkbox = element.querySelector<HTMLInputElement>('input[type="checkbox"]')!;
+    checkbox.click();
+  }
+
   function fillValidVehicle(): void {
     fill('text', 0, 'WVWZZZ1KZAW000001');
     fill('text', 1, 'Volkswagen');
@@ -111,10 +116,22 @@ describe('VehicleForm', () => {
       productionYear: 2025,
       fuelType: 'PETROL',
       plannedHandoverDate: '2026-12-15',
+      dealershipRegisters: false,
     });
     request.flush({ id: 7, ...request.request.body });
 
     await vi.waitFor(() => expect(navigate).toHaveBeenCalledWith(['/vehicles', 7]));
+  });
+
+  it('sends the registration choice when the dealership registers a new vehicle', async () => {
+    vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+    fillValidVehicle();
+    toggleDealershipRegisters();
+
+    await submit();
+    const request = http.expectOne({ method: 'POST', url: '/api/vehicles' });
+    expect(request.request.body.dealershipRegisters).toBe(true);
+    request.flush({ id: 8, ...request.request.body });
   });
 
   it('loads the vehicle in edit mode and updates it', async () => {
@@ -127,12 +144,14 @@ describe('VehicleForm', () => {
       productionYear: 2026,
       fuelType: 'HYBRID',
       plannedHandoverDate: null,
+      dealershipRegisters: false,
     };
     fixture.componentRef.setInput('id', '3');
     fixture.detectChanges();
     http.expectOne({ method: 'GET', url: '/api/vehicles/3' }).flush(vehicle);
     await fixture.whenStable();
     fill('text', 2, 'Superb');
+    toggleDealershipRegisters();
 
     await submit();
     const request = http.expectOne({ method: 'PUT', url: '/api/vehicles/3' });
@@ -143,8 +162,9 @@ describe('VehicleForm', () => {
       productionYear: 2026,
       fuelType: 'HYBRID',
       plannedHandoverDate: null,
+      dealershipRegisters: true,
     });
-    request.flush({ ...vehicle, model: 'Superb' });
+    request.flush({ ...vehicle, model: 'Superb', dealershipRegisters: true });
 
     await vi.waitFor(() => expect(navigate).toHaveBeenCalledWith(['/vehicles', 3]));
   });

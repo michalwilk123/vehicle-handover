@@ -10,6 +10,7 @@
 
 - Put feature code under `backend/src/main/java/com/example/dealership/`, with matching test packages. Controllers use validated request records and return response records. Keep entity mapping in the mapper and write operations in the transactional service.
 - Use the shared error types and `GlobalExceptionHandler`. Invalid requests use HTTP 400 with field errors. Missing resources use 404. Conflicting writes use 409. Follow `VehicleController` for successful responses.
+- "Today" is the dealership date in `Europe/Warsaw`. Inject the `Clock` bean from `config/ClockConfig` instead of calling `LocalDate.now()` without a clock, and use a fixed clock in tests.
 - Add schema changes as new Flyway migrations under `backend/src/main/resources/db/migration/`. Hibernate validates the schema. Check existing rows when adding constraints or defaults.
 - Follow the existing MVC, service, and repository tests. Put database constraints and JPA mapping assertions in tests that run against the database.
 

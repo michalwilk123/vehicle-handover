@@ -21,6 +21,8 @@ export interface Vehicle {
   productionYear: number;
   fuelType: FuelType;
   plannedHandoverDate: string | null;
+  /** True when the dealership registers the vehicle for the customer. */
+  dealershipRegisters: boolean;
 }
 
 export type VehicleRequest = Omit<Vehicle, 'id'>;

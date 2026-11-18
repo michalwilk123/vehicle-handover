@@ -27,6 +27,9 @@ public record VehicleRequest(
         @NotNull
         FuelType fuelType,
 
-        LocalDate plannedHandoverDate
+        LocalDate plannedHandoverDate,
+
+        // Optional for existing clients: null means false on create and "keep the saved value" on update.
+        Boolean dealershipRegisters
 ) {
 }

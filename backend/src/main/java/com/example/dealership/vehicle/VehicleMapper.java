@@ -12,7 +12,8 @@ public final class VehicleMapper {
                 request.model(),
                 request.productionYear(),
                 request.fuelType(),
-                request.plannedHandoverDate());
+                request.plannedHandoverDate(),
+                Boolean.TRUE.equals(request.dealershipRegisters()));
     }
 
     public static void updateEntity(Vehicle vehicle, VehicleRequest request) {
@@ -22,6 +23,9 @@ public final class VehicleMapper {
         vehicle.setProductionYear(request.productionYear());
         vehicle.setFuelType(request.fuelType());
         vehicle.setPlannedHandoverDate(request.plannedHandoverDate());
+        if (request.dealershipRegisters() != null) {
+            vehicle.setDealershipRegisters(request.dealershipRegisters());
+        }
     }
 
     public static VehicleResponse toResponse(Vehicle vehicle) {
@@ -32,6 +36,7 @@ public final class VehicleMapper {
                 vehicle.getModel(),
                 vehicle.getProductionYear(),
                 vehicle.getFuelType(),
-                vehicle.getPlannedHandoverDate());
+                vehicle.getPlannedHandoverDate(),
+                vehicle.isDealershipRegisters());
     }
 }

@@ -1,9 +1,11 @@
 package com.example.dealership.vehicle;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
@@ -24,6 +26,7 @@ import com.example.dealership.error.ConflictException;
 import com.example.dealership.error.NotFoundException;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -63,7 +66,23 @@ class VehicleControllerTest {
                 .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].vin").value(VIN))
                 .andExpect(jsonPath("$[0].fuelType").value("PETROL"))
-                .andExpect(jsonPath("$[0].plannedHandoverDate").value("2026-12-15"));
+                .andExpect(jsonPath("$[0].plannedHandoverDate").value("2026-12-15"))
+                .andExpect(jsonPath("$[0].dealershipRegisters").value(false));
+    }
+
+    @Test
+    void createPassesMissingRegistrationChoiceAsNullAndSentChoiceAsIs() throws Exception {
+        when(vehicleService.create(any(VehicleRequest.class))).thenReturn(response());
+
+        mockMvc.perform(post("/api/vehicles").contentType(MediaType.APPLICATION_JSON).content(VALID_BODY))
+                .andExpect(status().isCreated());
+        String withChoice = VALID_BODY.replace("\"PETROL\",", "\"PETROL\", \"dealershipRegisters\": true,");
+        mockMvc.perform(post("/api/vehicles").contentType(MediaType.APPLICATION_JSON).content(withChoice))
+                .andExpect(status().isCreated());
+
+        ArgumentCaptor<VehicleRequest> captor = ArgumentCaptor.forClass(VehicleRequest.class);
+        verify(vehicleService, times(2)).create(captor.capture());
+        assertThat(captor.getAllValues()).extracting(VehicleRequest::dealershipRegisters).containsExactly(null, true);
     }
 
     @Test
@@ -269,6 +288,6 @@ class VehicleControllerTest {
 
     private static VehicleResponse response() {
         return new VehicleResponse(
-                1L, VIN, "Volkswagen", "Golf", 2025, FuelType.PETROL, LocalDate.of(2026, 12, 15));
+                1L, VIN, "Volkswagen", "Golf", 2025, FuelType.PETROL, LocalDate.of(2026, 12, 15), false);
     }
 }

@@ -65,6 +65,26 @@ class VehicleServiceTest {
     }
 
     @Test
+    void createUsesCustomerRegistrationWhenChoiceIsMissing() {
+        when(vehicleRepository.existsByVin(VIN)).thenReturn(false);
+        when(vehicleRepository.save(any(Vehicle.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        assertThat(vehicleService.create(request(VIN, null)).dealershipRegisters()).isFalse();
+        assertThat(vehicleService.create(request(VIN, true)).dealershipRegisters()).isTrue();
+    }
+
+    @Test
+    void updateKeepsRegistrationChoiceWhenItIsMissingAndChangesItWhenSent() {
+        Vehicle vehicle = new Vehicle(VIN, "Volkswagen", "Golf", 2025, FuelType.PETROL, null, true);
+        when(vehicleRepository.findById(1L)).thenReturn(Optional.of(vehicle));
+        when(vehicleRepository.existsByVinAndIdNot(VIN, 1L)).thenReturn(false);
+        when(vehicleRepository.save(vehicle)).thenReturn(vehicle);
+
+        assertThat(vehicleService.update(1L, request(VIN, null)).dealershipRegisters()).isTrue();
+        assertThat(vehicleService.update(1L, request(VIN, false)).dealershipRegisters()).isFalse();
+    }
+
+    @Test
     void createThrowsConflictWhenVinAlreadyExists() {
         when(vehicleRepository.existsByVin(VIN)).thenReturn(true);
 
@@ -132,6 +152,11 @@ class VehicleServiceTest {
     }
 
     private static VehicleRequest request(String vin) {
-        return new VehicleRequest(vin, "Volkswagen", "Golf", 2025, FuelType.PETROL, LocalDate.of(2026, 12, 15));
+        return request(vin, null);
+    }
+
+    private static VehicleRequest request(String vin, Boolean dealershipRegisters) {
+        return new VehicleRequest(vin, "Volkswagen", "Golf", 2025, FuelType.PETROL, LocalDate.of(2026, 12, 15),
+                dealershipRegisters);
     }
 }
