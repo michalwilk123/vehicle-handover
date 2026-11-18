@@ -100,7 +100,7 @@ describe('VehicleDocuments', () => {
 
     expect(rows().map((row) => row[5].replace(/\s+/g, ' '))).toEqual([
       'Verify Reject',
-      'Reject',
+      'Undo verification Reject',
       '',
     ]);
   });

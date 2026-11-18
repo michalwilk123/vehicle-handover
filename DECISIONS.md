@@ -1,1 +1,2 @@
 - polepszono walidacje pól w formularzu (numer telefonu)
+- dodanie możliwości wycofania weryfikacji dokumentu powiązanego z samochodem

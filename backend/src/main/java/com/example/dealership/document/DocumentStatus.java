@@ -11,13 +11,13 @@ public enum DocumentStatus {
     }
 
     /**
-     * Allowed changes: PENDING to VERIFIED or REJECTED, and VERIFIED to REJECTED. A rejected document stays
+     * Allowed changes: PENDING to VERIFIED or REJECTED, and VERIFIED to PENDING or REJECTED. A rejected document stays
      * rejected; a correction is a new document. Sending the current status again is not a change.
      */
     public boolean canChangeTo(DocumentStatus target) {
         return switch (this) {
             case PENDING -> target == VERIFIED || target == REJECTED;
-            case VERIFIED -> target == REJECTED;
+            case VERIFIED -> target == PENDING || target == REJECTED;
             case REJECTED -> false;
         };
     }

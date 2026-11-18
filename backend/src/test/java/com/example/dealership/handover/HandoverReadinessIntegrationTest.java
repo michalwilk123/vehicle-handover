@@ -59,6 +59,22 @@ class HandoverReadinessIntegrationTest {
                 .andExpect(jsonPath("$.ready").value(true))
                 .andExpect(jsonPath("$.problems.length()").value(0));
 
+        mockMvc.perform(put("/api/vehicles/" + vehicleId + "/documents/" + coc + "/status")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"status\": \"PENDING\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(coc))
+                .andExpect(jsonPath("$.status").value("PENDING"));
+
+        mockMvc.perform(get(readinessUrl(vehicleId)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.ready").value(false))
+                .andExpect(jsonPath("$.missingDocumentTypes.length()").value(0))
+                .andExpect(jsonPath("$.problems.length()").value(1))
+                .andExpect(jsonPath("$.problems[0].documentType").value("COC"))
+                .andExpect(jsonPath("$.problems[0].reason").value("NOT_VERIFIED"));
+        verify(vehicleId, coc);
+
         // The dealership now registers the vehicle, and the handover date is removed.
         mockMvc.perform(put("/api/vehicles/" + vehicleId)
                         .contentType(MediaType.APPLICATION_JSON)
